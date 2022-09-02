@@ -1,18 +1,14 @@
 # 第1节 Git库
-git clone ssh://root@111.222.69.132/home/dell/nfcgits/nfc
-git clone ssh://root@111.222.69.132/home/dell/nfcgits/secure_element
-git clone ssh://root@111.222.69.132/home/dell/nfcgits/nxp
-git clone ssh://root@111.222.69.132/home/dell/nfcgits/docs
+https://github.com/hhggyy9988/nxpnfc.git
 
-git服务器
-git config --bool core.bare true
-密码 vm
+下载：
+https://github.com/hhggyy9988/nxpnfc.git
+git remote set-url origin https://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@github.com/hhggyy9988/nxpnfc.git
 
-git客户端
-提交
+更新：
 git add  ...
 git commit ...
-git push origin master
+git push origin main
 
 <br/>
 
