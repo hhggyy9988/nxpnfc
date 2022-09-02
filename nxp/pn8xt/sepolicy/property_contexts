@@ -1,0 +1,5 @@
+# NFC properties
+persist.nfc.            u:object_r:nfc_prop:s0
+
+#agenew add
+odm.nxp_nfc_pn553_beam          u:object_r:mtk_default_prop:s0

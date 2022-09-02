@@ -1,0 +1,109 @@
+# openharmony 3.1
+
+import("//build/ohos.gni")
+
+NFC_ROOT_DIR = "//third_party"
+
+config("nfc_nci_nxp_config") {
+  cflags = [
+    "-Wall",
+    "-Wno-error",
+    "-Wno-pointer-arith",
+    "-Wno-sign-compare",
+    "-Wno-unused-parameter",
+    "-Wno-missing-field-initializers",
+    "-Wno-parentheses-equality",
+    "-fPIC",
+  ]
+}
+
+ohos_share_library("libnfc_nci_nxp") {
+  output_name = "libnfc_nci_nxp"
+  sources = [
+    # halimpl/common
+    # no source files.
+
+    # halimpl/dnld
+    "$NFC_ROOT_DIR/nfc/halimpl/dnld/phDnldNfc.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/dnld/phDnldNfc_Internal.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/dnld/phDnldNfc_Utils.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/dnld/phNxpNciHal_Dnld.cc",
+
+    # halimpl/hal
+    "$NFC_ROOT_DIR/nfc/halimpl/hal/phNxpNciHal_ext.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/hal/phNxpNciHal_NfcDepSWPrio.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/hal/phNxpNciHal_nciParser.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/hal/phNxpNciHal.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/hal/phNxpNciHal_dta.cc",
+
+    # halimpl/log
+    "$NFC_ROOT_DIR/nfc/halimpl/log/phNxpLog.cc",
+
+    # halimpl/self-test
+    "$NFC_ROOT_DIR/nfc/halimpl/log/phNxpNciHal_SelfTest.cc",
+    
+    "$NFC_ROOT_DIR/nfc/halimpl/src/adaptation/EseAdaptation.cpp",
+
+    # halimpl/tml/
+    "$NFC_ROOT_DIR/nfc/halimpl/tml/spi_spm.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/tml/phTmlNfc.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/tml/phTmlNfc_i2c.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/tml/phOsalNfc_Timer.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/tml/phDal4Nfc_messageQueueLib.cc",
+
+    # halimpl/utils/
+    "$NFC_ROOT_DIR/nfc/halimpl/sparse_crc32.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/phNxpNciHal_utils.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/phNxpConfig.cpp",
+
+    # halimpl/configs/
+    "$NFC_ROOT_DIR/nfc/halimpl/NxpNfcCapability.cpp",
+
+    # ese-clients
+    "$NFC_ROOT_DIR/nfc/halimpl/ese-clients/src/DwpEseUpdater.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/ese-clients/src/DwpSeChannelCallback.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/ese-clients/src/DwpSeEvtCallback.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/ese-clients/src/HalLibnfcInteface.cc",
+  ]
+
+  include_dirs = [
+    # local_include_dirs
+    "$NFC_ROOT_DIR/nfc/halimpl/dnld",
+    "$NFC_ROOT_DIR/nfc/halimpl/hal",
+    "$NFC_ROOT_DIR/nfc/halimpl/log",
+    "$NFC_ROOT_DIR/nfc/halimpl/self-test",
+    "$NFC_ROOT_DIR/nfc/halimpl/tml",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/include",
+    "$NFC_ROOT_DIR/nfc/halimpl/configs",
+
+    # include_dirs
+    "$NFC_ROOT_DIR/secure_element/extns",
+    "$NFC_ROOT_DIR/secure_element/libese-spi/src/include",
+
+    # export_include_dirs
+    "$NFC_ROOT_DIR/nfc/extns/impl",
+    "$NFC_ROOT_DIR/nfc/halimpl/inc",
+    "$NFC_ROOT_DIR/nfc/halimpl/common",
+    "$NFC_ROOT_DIR/nfc/halimpl/utils",
+    "$NFC_ROOT_DIR/nfc/halimpl/ese-clients/inc",
+  ]
+
+  cflags = [
+    "-DBUILDCFG=1",
+    "-Wall",
+    "-Werror",
+    "-DNFC_HAL_TARGET=TRUE",
+    "-DNFC_RW_ONLY=TRUE",
+    "-DNXP_EXTNS=TRUE",
+    "-DNFC_NXP_AID_MAX_SIZE_DYN=TRUE",
+    "-DNXP_NFCC_HCE_F=TRUE",
+    "-DNFC_NXP_LISTEN_ROUTE_TBL_OPTIMIZATION=TRUE",
+    "-DNFC_NXP_HFO_SETTINGS=FALSE",
+    "-DANDROID",
+    "-DNXP_HW_SELF_TEST"
+  ]
+
+  configs = [ ":nfc_nci_nxp_config" ]
+  part_name = "netmanager_base"
+  subsystem_name = "communication"
+}

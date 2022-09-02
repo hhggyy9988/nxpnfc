@@ -1,0 +1,45 @@
+{
+    "name": "@ohos/myapp_myappservice",
+    "description": "system ability framework test",
+    "homePage": "https://gitee.com/openharmony",
+    "version": "3.1",
+    "license": "Apache License 2.0",
+    "repository": "",
+    "publishAs": "code-segment",
+    "segment": {
+        "destPath": "myapp/myappservice"
+    },
+    "dirs": {},
+    "scripts": {},
+    "component": {
+        "name": "myappservice_test",
+        "subsystem": "myapp",
+        "adapted_system_type": [
+            "standard"
+        ],
+        "rom": "200KB",
+        "ram": "7130KB",
+        "deps": {
+            "components": [
+                "hiviewdfx_hilog_native",
+                "ipc",
+                "samgr_standard",
+                "utils_base",
+                "safwk",
+                "startup_l2"
+            ],
+            "third_party": [ "libxml2" ]
+        },
+        "build": {
+            "sub_component": [
+                "//myapp/myappservice:myappservice",
+                "//myapp/myappservice/sa_profile:myappservice_sa_profile",
+                "//myapp/myappservice:myappclient"
+            ],
+            "inner_kits": [
+            ],
+            "test": [
+            ]
+        }
+    }
+}

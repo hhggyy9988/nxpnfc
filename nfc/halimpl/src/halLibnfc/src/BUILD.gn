@@ -1,0 +1,100 @@
+# openharmony 3.1
+
+import("//build/ohos.gni")
+
+NFC_ROOT_DIR = "//third_party"
+
+config("hal_libnfc_config") {
+  cflags = [
+    "-Wall",
+    "-Wno-error",
+    "-Wno-pointer-arith",
+    "-Wno-sign-compare",
+    "-Wno-unused-parameter",
+    "-Wno-missing-field-initializers",
+    "-Wno-parentheses-equality",
+    "-fPIC",
+  ]
+}
+
+ohos_share_library("libhal_libnfc") {
+  output_name = "libhal_libnfc"
+  sources = [
+    # "adaptation/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/adaptation/CrcChecksum.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/adaptation/HalNfcAdaptation.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/adaptation/libmain.cc",
+
+    # "gki/common/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/gki/common/gki_buffer.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/gki/common/gki_time.cc",
+
+    # "gki/ulinux/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/gki/ulinux/gki_ulinux.cc",
+
+    # "nfa/dm/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/dm/nfa_dm_act.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/dm/nfa_dm_api.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/dm/nfa_dm_cfg.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/dm/nfa_dm_discover.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/dm/nfa_dm_main.cc",
+
+    # "nfa/ee/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/ee/nfa_ee_act.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/ee/nfa_ee_api.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/ee/nfa_ee_main.cc",
+
+    # "nfc/nci/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/hci/nfa_hci_act.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/hci/nfa_hci_api.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/hci/nfa_hci_ci.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/hci/nfa_hci_main.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/hci/nfa_hci_utils.cc",
+
+    # "nfa/sys/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/sys/nfa_sys_cback.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/sys/nfa_sys_cfg.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/sys/nfa_sys_main.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/sys/nfa_sys_ptim.cc",
+
+    # "nfc/nci/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/nci/nci_hmsgs.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/nci/nci_hrcv.cc",
+
+    # "nfc/nfc/*.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/nfc/nfc_ee.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/nfc/nfc_main.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/nfc/nfc_ncif.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/nfc/nfc_task.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/nfc/nfc_utils.cc",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/nfc/nfc_vs.cc",
+  ]
+
+  include_dirs = [
+    # export_include_dirs
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/include",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfc/include",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/nfa/include",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/gki/ulinux",
+    "$NFC_ROOT_DIR/nfc/halimpl/src/halLibnfc/src/gki/common",
+    
+    # include_dirs
+    "$NFC_ROOT_DIR/nfc/extns/impl/",
+    "$NFC_ROOT_DIR/secure_element/extns/impl/",
+  ]
+
+  cflags = [
+    "-DBUILDCFG=1",
+    "-Wall",
+    "-Werror",
+    "-DNXP_EXTNS=TRUE",
+    "-DNFC_NXP_AID_MAX_SIZE_DYN=TRUE",
+    "-DNXP_NFCC_HCE_F=TRUE",
+    "-DNFC_NXP_LISTEN_ROUTE_TBL_OPTIMIZATION=TRUE",
+    "-DANDROID"
+  ]
+
+  configs = [ ":hal_libnfc_config" ]
+  part_name = "netmanager_base"
+  subsystem_name = "communication"
+}
